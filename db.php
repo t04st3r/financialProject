@@ -50,5 +50,9 @@ class db {
         mysqli_free_result($this->result);
         return $result_array;  
     }
+    
+    public function checkLogin($user_name){
+        
+    }
 
 }

@@ -1,0 +1,13 @@
+#matrix {
+    border:4px solid #1b6d85;
+    margin-top:15px;
+    padding: 15px;
+}
+
+.enabled_matrix {
+    border: 3px solid red;
+}
+
+.matrix_margin {
+}
+
