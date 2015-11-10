@@ -8,6 +8,10 @@
     border: 3px solid red;
 }
 
-.matrix_margin {
+.login_error {
+    color : red;
+    font-weight: bold;
+    text-align: center;
+    margin-left: 65px;
 }
 

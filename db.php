@@ -51,7 +51,17 @@ class db {
         return $result_array;  
     }
     
-    public function checkLogin($user_name){
+    public function checkLogin($user_name, $password, $matrix_array){
+        $query = 'SELECT customer_id FROM customer WHERE user_name = ? AND password = ?';
+        $stmt = mysqli_prepare($this->conn, $query);
+        $stmt->bind_param('ss' , $user_name , $password);
+        $stmt->execute();
+        if($stmt->affected_rows !== 1){
+            //wrong username or password
+            return false;
+        }
+        //TODO verify matrix_array values
+        return true;
         
     }
 

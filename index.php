@@ -1,17 +1,20 @@
 <!DOCTYPE html>
 <?php
-require_once 'db.php';
-require_once 'check_login.php';
+session_start();
 
 $character = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
 $hidden_random = str_shuffle($character);
 $_SESSION['hidden_check'] = $hidden_random;
 
 function random_matrix() {
-    $secure_code_array = Array(false, false, false, false, false, false, false, false, false);
+    $secure_code_array = Array('a11' => false, 'a12' => false,'a13' => false, 
+                                'a21' => false, 'a22' => false, 'a23' => false, 
+                                'a31' => false, 'a32' => false,'a33' => false);
     $counter = 0;
     while ($counter < 4) {
-        $random_index = rand(0, 8);
+        $i = rand(1, 3);
+        $j = rand(1, 3);
+        $random_index = 'a'.$i.$j;
         if (!$secure_code_array[$random_index]) {
             $secure_code_array[$random_index] = true;
             $counter++;
@@ -29,7 +32,7 @@ function random_matrix() {
         <title></title>
     </head>
     <body>
-        <form class="form-horizontal" method="POST">
+        <form class="form-horizontal" method="POST" action="check_login.php">
             <div class="col-lg-5">
                 <div class="form-group">
                     <label for="inputUserName" class="col-sm-2 control-label">Customer UserName</label>
@@ -44,9 +47,15 @@ function random_matrix() {
                         <input type="hidden" value="<?php echo $hidden_random ?>" name="hidden_check">
                     </div>
                 </div>
-                    <?php
+                <?php
+                    //write the authentication failure message 
+                    if(isset($_GET['login']) && $_GET['login'] == 'false'){
+                                echo '<h4 class="login_error">Authentication Failed</h4>';
+                            }
                     $array = random_matrix();
-                    ?>
+                    //pass the array for checking correct indexes in check_login.php
+                    $_SESSION['matrix_array'] = $array;
+                ?>
                 <label for="matrix" class="col-sm-2 control-label">Secure Code</label>
                     <div class="table-responsive form-group">
                         <table class="table table-striped table-bordered" id="matrix">
@@ -54,7 +63,7 @@ function random_matrix() {
                             <td>
                                 <div class="col-lg-7">
                                     <label for="a11" class="control-label">1</label>
-                                    <?php if ($array[0]) { ?>
+                                    <?php if ($array["a11"]) { ?>
                                     <input type="text" name="a11" id="a11" class="form-control matrix_margin enabled_matrix" maxlength="1" required>
                                     <?php } else { ?>
                                         <input type="text" id="a11" class="form-control" disabled="true">
@@ -64,7 +73,7 @@ function random_matrix() {
                             <td>
                                 <div class="col-lg-7">
                                     <label for="a12" class="control-label">2</label>
-                                    <?php if ($array[1]) { ?>
+                                    <?php if ($array["a12"]) { ?>
                                         <input type="text" name="a12" id="a12" class="form-control matrix_margin enabled_matrix" maxlength="1" required>
                                     <?php } else { ?>
                                         <input type="text" id="a12" class="form-control" disabled="true">
@@ -74,7 +83,7 @@ function random_matrix() {
                             <td>
                                 <div class="col-lg-7">
                                     <label for="a13" class="control-label">3</label>
-                                    <?php if ($array[2]) { ?>
+                                    <?php if ($array["a13"]) { ?>
                                         <input type="text" name="a13" id="a13" class="form-control matrix_margin enabled_matrix" maxlength="1" required>
                                     <?php } else { ?>
                                         <input type="text" id="a13" class="form-control" disabled="true">
@@ -86,7 +95,7 @@ function random_matrix() {
                             <td>
                                 <div class="col-lg-7">
                                     <label for="a21" class="control-label">4</label>
-                                    <?php if ($array[3]) { ?>
+                                    <?php if ($array["a21"]) { ?>
                                         <input type="text" name="a21" id="a21" class="form-control matrix_margin enabled_matrix" maxlength="1" required>
                                     <?php } else { ?>
                                         <input type="text" id="a21" class="form-control" disabled="true">
@@ -96,7 +105,7 @@ function random_matrix() {
                             <td>
                                 <div class="col-lg-7">
                                     <label for="a22" class="control-label">5</label>
-                                    <?php if ($array[4]) { ?>
+                                    <?php if ($array["a22"]) { ?>
                                         <input type="text" name="a22" id="a22" class="form-control matrix_margin enabled_matrix" maxlength="1" required>
                                     <?php } else { ?>
                                         <input type="text" id="a22" class="form-control" disabled="true">
@@ -106,7 +115,7 @@ function random_matrix() {
                             <td>
                                 <div class="col-lg-7">
                                     <label for="a23" class="control-label">6</label>
-                                    <?php if ($array[5]) { ?>
+                                    <?php if ($array["a23"]) { ?>
                                         <input type="text" name="a23" id="a23" class="form-control matrix_margin enabled_matrix" maxlength="1" required>
                                     <?php } else { ?>
                                         <input type="text" id="a23" class="form-control" disabled="true">
@@ -118,7 +127,7 @@ function random_matrix() {
                             <td>
                                 <div class="col-lg-7">
                                     <label for="a31" class="control-label">7</label>
-                                    <?php if ($array[6]) { ?>
+                                    <?php if ($array["a31"]) { ?>
                                         <input type="text" name="a31" id="a31" class="form-control matrix_margin enabled_matrix" maxlength="1" required>
                                     <?php } else { ?>
                                         <input type="text" id="a31" class="form-control" disabled="true">
@@ -128,7 +137,7 @@ function random_matrix() {
                             <td>
                                 <div class="col-lg-7">
                                     <label for="a32" class="control-label">8</label>
-                                    <?php if ($array[7]) { ?>
+                                    <?php if ($array["a32"]) { ?>
                                         <input type="text" name="a32" id="a32" class="form-control matrix_margin enabled_matrix" maxlength="1" required>
                                     <?php } else { ?>
                                         <input type="text" id="a32" class="form-control" disabled="true">
@@ -138,7 +147,7 @@ function random_matrix() {
                             <td>
                                 <div class="col-lg-7">
                                     <label for="a33" class="control-label">9</label>
-                                    <?php if ($array[8]) { ?>
+                                    <?php if ($array["a33"]) { ?>
                                         <input type="text" name="a33" id="a33" class="form-control matrix_margin enabled_matrix" maxlength="1" required>
                                     <?php } else { ?>
                                         <input type="text" id="a33" class="form-control" disabled="true">
