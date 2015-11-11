@@ -21,7 +21,11 @@ if(!$result['result']){
     login_fail($result['matrix']);
 }else{
     //login successful, let's jump into the welcome page guys!
-    header('Location: http://' . $_SERVER['HTTP_HOST'] . '/welcome.php?user='.$username);
+    $_SESSION['id'] = $result['id'];
+    $_SESSION['user_name'] = $username;
+    $token = generate_token();
+    $_SESSION['token'] = $token;
+    header('Location: http://' . $_SERVER['HTTP_HOST'] . '/welcome.php?token='.$token);
 }
 
 function login_fail($matrix = false) {
@@ -79,4 +83,8 @@ function prepare_matrix_array() {
         }
     }
     return $array;
+}
+
+function generate_token(){
+    return str_shuffle('0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ');
 }

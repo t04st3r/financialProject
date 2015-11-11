@@ -29,16 +29,15 @@ class db {
         }
     }
 
-    /* function __destruct() {
-      if (isset($this->conn) || $this->conn != null) {
-      mysqli_close($this->conn);
-      }
-      } */
+    function __destruct() {
+        if (isset($this->conn) || $this->conn != null) {
+            unset($this->conn);
+        }
+    }
 
     private function error_message() {
         return "Database Error: " . mysqli_error($this->conn);
     }
-
 
     public function checkLogin($user_name, $password, $matrix_array) {
         $stmt = $this->conn->prepare("SELECT customer_id FROM customer WHERE user_name = ? AND password = ?");
@@ -46,23 +45,23 @@ class db {
         $stmt->execute();
         $result = $stmt->get_result();
         $rows = $stmt->affected_rows;
-        if($rows != 1){
+        if ($rows != 1) {
             return array('result' => false, 'matrix' => false);
         }
         $result_set = $result->fetch_array(MYSQLI_ASSOC);
         $id = $result_set['customer_id'];
         $matrix_result = $this->checkMatrix($matrix_array, $id);
-        if(!$matrix_result){
+        if (!$matrix_result) {
             return array('result' => false, 'matrix' => true);
         }
-        return array('result' => true);
+        return array('result' => true , 'id' => $id);
     }
-    
-    private function checkMatrix($matrix_array, $id){
+
+    private function checkMatrix($matrix_array, $id) {
         $query = "SELECT customer_id FROM matrix WHERE customer_id = $id";
-        foreach($matrix_array as $key => $value){
-                $query .= " AND ".$key . " = '" . $value . "'";
-            }
+        foreach ($matrix_array as $key => $value) {
+            $query .= " AND " . $key . " = '" . $value . "'";
+        }
         $this->conn->query($query);
         $row = $this->conn->affected_rows;
         return $row == 1;
