@@ -17,15 +17,14 @@ $password = md5($_POST['pass']);
 $matrix_array = prepare_matrix_array();
 $db = new db();
 $result = $db->checkLogin($username, $password, $matrix_array);
-if($result){
-    header('Location: http://' . $_SERVER['HTTP_HOST'] . '/welcome.php?user=raffaele');
+if(!$result['result']){
+    login_fail($result['matrix']);
+}else{
+    //login successful, let's jump into the welcome page guys!
+    header('Location: http://' . $_SERVER['HTTP_HOST'] . '/welcome.php?user='.$username);
 }
-login_fail();
-//return to login page sending fail attempt as query string parameter
 
-
-
-function login_fail() {
+function login_fail($matrix = false) {
     // Unset all of the session variables.
     $_SESSION = array();
 
@@ -39,8 +38,12 @@ function login_fail() {
 
     // Finally, destroy the session.
     session_destroy();
-    //redirect to the index.php page for login
-    header('Location: http://' . $_SERVER['HTTP_HOST'] . '?login=false');
+    //redirect to the index.php page for login sending message whether is a auth login error or code matrix error
+    if(!$matrix){
+        header('Location: http://' . $_SERVER['HTTP_HOST'] . '?err=auth');
+    }else{
+         header('Location: http://' . $_SERVER['HTTP_HOST'] . '?err=code');
+    }
 }
 
 //checking existence of values for username, password and matrix values

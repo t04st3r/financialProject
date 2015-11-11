@@ -1,20 +1,20 @@
 <!DOCTYPE html>
 <?php
 session_start();
-
+error_reporting(E_ALL);
 $character = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
 $hidden_random = str_shuffle($character);
 $_SESSION['hidden_check'] = $hidden_random;
 
 function random_matrix() {
-    $secure_code_array = Array('a11' => false, 'a12' => false,'a13' => false, 
-                                'a21' => false, 'a22' => false, 'a23' => false, 
-                                'a31' => false, 'a32' => false,'a33' => false);
+    $secure_code_array = Array('a11' => false, 'a12' => false, 'a13' => false,
+        'a21' => false, 'a22' => false, 'a23' => false,
+        'a31' => false, 'a32' => false, 'a33' => false);
     $counter = 0;
     while ($counter < 4) {
         $i = rand(1, 3);
         $j = rand(1, 3);
-        $random_index = 'a'.$i.$j;
+        $random_index = 'a' . $i . $j;
         if (!$secure_code_array[$random_index]) {
             $secure_code_array[$random_index] = true;
             $counter++;
@@ -48,23 +48,28 @@ function random_matrix() {
                     </div>
                 </div>
                 <?php
-                    //write the authentication failure message 
-                    if(isset($_GET['login']) && $_GET['login'] == 'false'){
-                                echo '<h4 class="login_error">Authentication Failed</h4>';
-                            }
-                    $array = random_matrix();
-                    //pass the array for checking correct indexes in check_login.php
-                    $_SESSION['matrix_array'] = $array;
+                //write the authentication failure message 
+                if (isset($_GET['err'])) {
+                    if ($_GET['err'] == 'auth') {
+                        echo '<h4 class="login_error">Authentication Failed</h4>';
+                    }
+                    if ($_GET['err'] == 'code') {
+                        echo '<h4 class="login_error">Invalid Secure Code</h4>';
+                    }
+                }
+                $array = random_matrix();
+                //pass the array for checking correct indexes in check_login.php
+                $_SESSION['matrix_array'] = $array;
                 ?>
                 <label for="matrix" class="col-sm-2 control-label">Secure Code</label>
-                    <div class="table-responsive form-group">
-                        <table class="table table-striped table-bordered" id="matrix">
+                <div class="table-responsive form-group">
+                    <table class="table table-striped table-bordered" id="matrix">
                         <tr>
                             <td>
                                 <div class="col-lg-7">
                                     <label for="a11" class="control-label">1</label>
                                     <?php if ($array["a11"]) { ?>
-                                    <input type="text" name="a11" id="a11" class="form-control matrix_margin enabled_matrix" maxlength="1" required>
+                                        <input type="text" name="a11" id="a11" class="form-control matrix_margin enabled_matrix" maxlength="1" required>
                                     <?php } else { ?>
                                         <input type="text" id="a11" class="form-control" disabled="true">
                                     <?php } ?>
@@ -123,7 +128,7 @@ function random_matrix() {
                                 </div>
                             </td>
                         </tr>
-                         <tr>
+                        <tr>
                             <td>
                                 <div class="col-lg-7">
                                     <label for="a31" class="control-label">7</label>
@@ -157,15 +162,15 @@ function random_matrix() {
                         </tr>
                     </table>
                 </div>
-                </div>
-                
-                <div class="form-group">
-                    <div class="col-sm-offset-2 col-sm-10">
-                        <button type="submit" class="btn btn-default">Sign in</button>
-                    </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-10">
+                    <button type="submit" class="btn btn-default">Sign in</button>
                 </div>
             </div>
-        </form>
-        <script src="js/bootstrap.min.js"></script>
-    </body>
+        </div>
+    </form>
+    <script src="js/bootstrap.min.js"></script>
+</body>
 </html>
