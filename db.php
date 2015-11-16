@@ -91,5 +91,15 @@ class db {
         $result_set = $result->fetch_all(MYSQLI_ASSOC);
         return $result_set;
     }
+    
+    public function getAccountsNumber($id){
+        $query = "SELECT account_number FROM account WHERE customer_id = ? ";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bind_param('i', $id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $result_set = $result->fetch_all(MYSQLI_ASSOC);
+        return $result_set;
+    }
 
 }

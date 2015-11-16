@@ -176,7 +176,7 @@ function random_matrix() {
 
                 <div class="form-group">
                     <div class="login-button col-lg-8">
-                        <button type="submit" class="btn btn-default" style="width:200px;">Sign in</button>
+                        <button type="submit" class="btn btn-default btn-lg" style="width:200px;">Sign in</button>
                     </div>
                 </div>
             </form>
