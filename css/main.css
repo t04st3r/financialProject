@@ -13,6 +13,7 @@ body {
 
 #background {
     background-image: url('/img/u1.jpg');
+    position: relative;
 }
 
 #form-container{
@@ -47,5 +48,10 @@ body {
 #codeTable {
     position: relative;
     top: 200px;
+}
+
+#user_message {
+    text-align: left;
+    margin-left: 10px;
 }
 

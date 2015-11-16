@@ -1,9 +1,12 @@
-<!DOCTYPE html>
 <?php
-if (isset($_GET['logout']) && $_GET['logout'] = true) {
-    logout();
-}
+
 session_start();
+
+if (isset($_GET['logout']) && $_GET['logout'] == true) {
+    //clean array session
+    $_SESSION = array();  
+}
+
 $character = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
 $hidden_random = str_shuffle($character);
 $_SESSION['hidden_check'] = $hidden_random;
@@ -25,36 +28,18 @@ function random_matrix() {
     return $secure_code_array;
 }
 
-function logout() {
-    // Unset all of the session variables.
-    $_SESSION = array();
-
-    // If it's desired to kill the session, also delete the session cookie.
-    // Note: This will destroy the session, and not just the session data!
-    if (ini_get("session.use_cookies")) {
-        $params = session_get_cookie_params();
-        setcookie(session_name(), '', time() - 42000, $params["path"], $params["domain"], $params["secure"], $params["httponly"]
-        );
-    }
-
-    // Finally, destroy the session.
-    session_destroy();
-}
 ?>
+<!DOCTYPE html>
 <html>
     <head>
-        <meta charset="UTF-8">
-        <link rel="stylesheet" href="css/bootstrap-theme.min.css">
-        <link rel="stylesheet" href="css/bootstrap.min.css">
-        <link rel="stylesheet" href="css/main.css">
-        <title></title>
+        <?php 
+        require_once './modules/header.php';
+        ?>
     </head>
     <body>
-        <div id="logo">
-            <img src="img/u12.png" class="img-responsive center-block logo-image" alt="Bank Logo">
-            <h2>BLACK HORSE</h2>
-            <h3>Personal E-Banking System</h3>
-        </div>
+        <?php 
+        require_once './modules/logo.php';
+        ?>
 
         <div id="background">
             <form class="form-horizontal" method="POST" action="check_login.php">
@@ -196,9 +181,9 @@ function logout() {
                 </div>
             </form>
         </div>
-        <div class="footer">
-            <p>Powered by <strong>FinDev&trade;</strong></p>
-        </div>
+        <?php 
+        require_once './modules/footer.php';
+        ?>
         
         <script src="js/jquery-2.1.4.min.js"></script>   
         <script src="js/bootstrap.min.js"></script>

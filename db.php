@@ -56,6 +56,18 @@ class db {
         }
         return array('result' => true , 'id' => $id);
     }
+    
+    public function getUserNameSurname($id){
+        $query = "SELECT name, surname FROM customer WHERE customer_id = ?";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bind_param('i', $id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $result_set = $result->fetch_array(MYSQLI_ASSOC);
+        $name = $result_set['name'];
+        $surname = $result_set['surname'];
+        return $name.' '.$surname;
+    }
 
     private function checkMatrix($matrix_array, $id) {
         $query = "SELECT customer_id FROM matrix WHERE customer_id = $id";
@@ -65,6 +77,10 @@ class db {
         $this->conn->query($query);
         $row = $this->conn->affected_rows;
         return $row == 1;
+    }
+    
+    public function getAccountCards($id){
+        
     }
 
 }

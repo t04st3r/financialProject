@@ -1,0 +1,26 @@
+.card {
+    background-image: url('/img/u10.jpg');
+    width: 346px;
+    height: 175px;
+    position: absolute;
+    margin: 20px;
+    z-index: 0;
+}
+
+#card_container {
+    position: relative;
+    height: 220px;
+    text-align: left;
+    overflow-x: auto;
+    border: #1b6d85 solid 3px;
+    top: 10px;
+}
+
+#menu_buttons{
+    position: relative;
+    height: 220px;
+}
+
+.circuit_logo {
+    height: 10%;
+}

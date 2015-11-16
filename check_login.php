@@ -1,8 +1,14 @@
 <?php
 
-require_once 'db.php';
 
 session_start();
+
+require_once 'db.php';
+
+if(!isset($_SESSION['hidden_check'])){
+    login_fail();
+}
+
 //Check for the hidden input value (CSRF check)
 if (!isset($_POST['hidden_check']) || $_POST['hidden_check'] != $_SESSION['hidden_check']) {
     login_fail();
@@ -22,7 +28,6 @@ if(!$result['result']){
 }else{
     //login successful, let's jump into the welcome page guys!
     $_SESSION['id'] = $result['id'];
-    $_SESSION['user_name'] = $username;
     $token = generate_token();
     $_SESSION['token'] = $token;
     header('Location: http://' . $_SERVER['HTTP_HOST'] . '/welcome.php?token='.$token);
