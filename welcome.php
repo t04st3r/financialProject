@@ -4,10 +4,13 @@ require_once './db.php';
 
 
 
-if ($_GET['token'] != $_SESSION['token'] || !isset($_SESSION['id'])) {
+if (!isset($_SESSION['token']) || !isset($_SESSION['id']) || $_GET['token'] != $_SESSION['token'] ) {
     header('Location: http://' . $_SERVER['HTTP_HOST'] . '?err=auth');
 }
+
+
 ?>
+<!DOCTYPE html>
 <html>
     <head>
         <?php

@@ -1,3 +1,5 @@
+<?php $token =  $_SESSION['token']; ?>
+
 <nav class="navbar navbar-default" style="margin-bottom:0px;">
   <div class="container-fluid">
     <!-- Brand and toggle get grouped for better mobile display -->
@@ -13,11 +15,11 @@
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav nav-justified">
-        <li><a href="#">Overview</a></li>
+        <li><a href="welcome.php?token=<?php echo $token ?>">Overview</a></li>
         <li><a href="#">Account Statement</a></li>
         <li><a href="#">Money Transfer</a></li>
         <li><a href="#">Finance</a></li>
-        <li><a href="#">Branches and ATM</a></li>
+        <li><a href="branch.php?token=<?php echo $token ?>">Branches and ATM</a></li>
       </ul>
     </div><!-- /.navbar-collapse -->
   </div><!-- /.container-fluid -->
