@@ -80,7 +80,16 @@ class db {
     }
     
     public function getAccountCards($id){
-        
+        $query = "SELECT account_number, balance, currency, account.card_number, type_name, card_circuit AS circuit "
+                . "FROM account, account_type, card WHERE customer_id = ? "
+                . "AND account_type = id_type "
+                . "AND account.card_number = card.card_number;";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bind_param('i', $id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $result_set = $result->fetch_all(MYSQLI_ASSOC);
+        return $result_set;
     }
 
 }
