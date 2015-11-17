@@ -3,3 +3,14 @@
     margin-bottom: 30px;
 }
 
+.error{
+    color : red;
+    font-weight: bold;
+    text-align: center;
+}
+
+.no_error {
+    color : green;
+    font-weight: bold;
+    text-align: center
+}
