@@ -97,7 +97,6 @@ class db {
         return $result_set;
     }
 
-    
     public function transaction($cust_id, $cust_account, $amount, $ben_name, $ben_surname, $ben_account, $message, $ip) {
 
         //check whether customer account and beneficiary account are the same
@@ -107,7 +106,7 @@ class db {
             return array('result' => false,
                 'message' => 'Transaction Aborted:<br/>' . $error . '<br/>Transaction Code: ' . $t_code);
         }
-        
+
         //check wheter the value of accounts numbers and amounts are numeric
         if (!is_numeric($amount) || !is_numeric($cust_account) || !is_numeric($ben_account)) {
             $error = 'bad data format';
@@ -115,7 +114,7 @@ class db {
             return array('result' => false,
                 'message' => 'Transaction Aborted:<br/>' . $error . '<br/>Transaction Code: ' . $t_code);
         }
-        
+
         //check whether the amount is higher the minimum required
         if ($amount < 100) {
             $error = 'minimun amount transferable is 100.00 $HK';
@@ -131,7 +130,7 @@ class db {
             return array('result' => false,
                 'message' => 'Transaction Aborted:<br/>' . $error . '<br/>Transaction Code: ' . $t_code);
         }
-        
+
         //check whether the customer account account exists
         $result_cust_account = $this->checkAccountExists($cust_account);
         if (!$result_cust_account['result']) {
@@ -143,38 +142,39 @@ class db {
 
         //check whether the beneficiary account exists
         $result_account_exists = $this->checkAccountExists($ben_account);
-        
+
         if (!$result_account_exists['result']) {
             $error = 'unknown beneficiary account';
             $t_code = $this->writeTransactionLog($cust_account, $amount, $ben_account, $ip, $message, false, $error);
             return array('result' => false,
                 'message' => 'Transaction Aborted:<br/>' . $error . '<br/>Transaction Code: ' . $t_code);
         }
-        
-        
+
+
         //check whether the beneficiary name is exactly the same of the registered one
         $array_result = $result_account_exists['array'];
-        
-        if (strcasecmp($array_result['name'], $ben_name) != 0 || strcasecmp($array_result['surname'], $ben_surname) != 0 ) {
+
+        if (strcasecmp($array_result['name'], $ben_name) != 0 || strcasecmp($array_result['surname'], $ben_surname) != 0) {
             $error = 'unknown beneficiary name';
             $t_code = $this->writeTransactionLog($cust_account, $amount, $ben_account, $ip, $message, false, $error);
             return array('result' => false,
                 'message' => 'Transaction Aborted:<br/>' . $error . '<br/>Transaction Code: ' . $t_code);
         }
-        
+
         //check whether there is suffucent funds to perform the transation
         $check_funds = $this->checkSufficientFunds($cust_id, $amount, $cust_account);
-        
-        if(!$check_funds){
-           $error = 'insufficient funds to perform the transaction';
-           $t_code = $this->writeTransactionLog($cust_account, $amount, $ben_account, $ip, $message, false, $error);
+
+        if (!$check_funds) {
+            $error = 'insufficient funds to perform the transaction';
+            $t_code = $this->writeTransactionLog($cust_account, $amount, $ben_account, $ip, $message, false, $error);
             return array('result' => false,
-                'message' => 'Transaction Aborted:<br/>' . $error . '<br/>Transaction Code: ' . $t_code); 
+                'message' => 'Transaction Aborted:<br/>' . $error . '<br/>Transaction Code: ' . $t_code);
         }
+
+        //transaction can proceed
+        $result = $this->transferMoney($cust_account, $ben_account, $amount, $ip, $message);
         
-        $id_beneficiary = $array_result['id'];
-        
-        return array('result' => true, 'message' => 'ok');
+        return $result;
     }
 
     private function checkAccountExists($account) {
@@ -192,6 +192,88 @@ class db {
             return array('result' => true, 'array' => $result_set);
         }
     }
+
+    //check whether there is enough money on the customer account to perform the transaction
+    private function checkSufficientFunds($id, $amount, $customer_account) {
+        $query = "SELECT balance FROM account WHERE "
+                . "account_number = ? AND customer_id = ?";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bind_param('ii', $customer_account, $id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $rows = $stmt->affected_rows;
+        if ($rows != 1) {
+            return false;
+        } else {
+            $result_set = $result->fetch_array(MYSQLI_ASSOC);
+            $cust_balance = $result_set['balance'];
+            return $cust_balance >= $amount;
+        }
+    }
+
+    private function transferMoney($cust_account, $ben_account, $amount, $ip, $message) {
+        try {
+            //begin transaction
+            $this->conn->begin_transaction();
+            //lock tables to avoid cuncurrency issues
+            $this->conn->query('LOCK TABLES account WRITE');
+
+            //get the balance from customer account
+            $query = "SELECT balance FROM account WHERE "
+                    . "account_number = ?";
+            $stmt = $this->conn->prepare($query);
+            $stmt->bind_param('i', $cust_account);
+            $stmt->execute();
+            $result = $stmt->get_result();
+            $result_set = $result->fetch_array(MYSQLI_ASSOC);
+            $cust_balance = $result_set['balance'];
+            
+            //get the balance from beneficiary account
+            $query = "SELECT balance FROM account WHERE "
+                    . "account_number = ?";
+            $stmt = $this->conn->prepare($query);
+            $stmt->bind_param('i', $ben_account);
+            $stmt->execute();
+            $result = $stmt->get_result();
+            $result_set = $result->fetch_array(MYSQLI_ASSOC);
+            $ben_balance = $result_set['balance'];
+            
+            //calcolate new balances bcadd bcsub
+            $new_customer_balance = $cust_balance - $amount;
+            $new_beneficiary_balance = $ben_balance + $amount;
+            
+            //update cusotmer account with new balance
+            $query = 'UPDATE account SET balance = ? WHERE account_number = ?';
+            $stmt = $this->conn->prepare($query);
+            $stmt->bind_param('di',$new_customer_balance, $cust_account);
+            $stmt->execute();
+            
+            //update beneficiary account with new balance
+            $query = 'UPDATE account SET balance = ? WHERE account_number = ?';
+            $stmt = $this->conn->prepare($query);
+            $stmt->bind_param('di',$new_beneficiary_balance, $ben_account);
+            $stmt->execute();
+            
+            //unlock tables
+            $this->conn->query('UNLOCK TABLES');
+            
+            //write on transaction table transaction successfully completed
+            $code = $this->writeTransactionLog($cust_account, $amount, $ben_account, $ip, $message, true, NULL);
+            
+            //commit transaction
+            $this->conn->commit();
+            
+           return array('result' => true, 'message' => 'Transaction successfully executed</br></br>Transaction Code: '.$code);
+            
+        } catch (Exception $e) {
+            $error = 'Transaction Rolled Back: '.$e->getMessage();
+            $this->conn->rollback();
+            $code = $this->writeTransactionLog($cust_account, $amount, $ben_account, $ip, $message, false, $error);
+            return array('result' => false, 'message' => $error.'<br/>Transaction Code: '.$code);
+        }
+    }
+    
+    
     //write on the transaction table the successful or aborted transaction
     private function writeTransactionLog($cust_account, $amount, $dest_account, $ip, $message, $flag = false, $error = NULL) {
         $date = date('Y-m-d H:i:s');
@@ -206,24 +288,6 @@ class db {
         $stmt->bind_param('ssiisisss', $transaction_code, $date, $cust_account, $amount, $flag_mysql, $dest_account, $ip, $message, $error);
         $stmt->execute();
         return $transaction_code;
-    }
-    
-    //check whether there is enough money on the customer account to perform the transaction
-    private function checkSufficientFunds($id, $amount, $customer_account) {
-        $query = "SELECT balance FROM account WHERE "
-                . "account_number = ? AND customer_id = ?";
-        $stmt = $this->conn->prepare($query);
-        $stmt->bind_param('ii', $customer_account, $id);
-        $stmt->execute();
-        $result = $stmt->get_result();
-        $rows = $stmt->affected_rows;
-        if ($rows != 1) {
-            return false;
-        } else {
-            $result_set = $result->fetch_array(MYSQLI_ASSOC);
-            $cust_amount = $result_set['balance'];
-            return $cust_amount >= $amount;
-        }
     }
 
 }
