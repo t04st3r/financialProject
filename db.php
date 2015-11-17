@@ -34,6 +34,7 @@ class db {
         }
     }
 
+    //perform login checking username password and matrix values
     public function checkLogin($user_name, $password, $matrix_array) {
         $stmt = $this->conn->prepare("SELECT customer_id FROM customer WHERE user_name = ? AND password = ?");
         $stmt->bind_param('ss', $user_name, $password);
@@ -52,6 +53,7 @@ class db {
         return array('result' => true, 'id' => $id);
     }
 
+    //get the customer name and surname given his id
     public function getUserNameSurname($id) {
         $query = "SELECT name, surname FROM customer WHERE customer_id = ?";
         $stmt = $this->conn->prepare($query);
@@ -64,6 +66,7 @@ class db {
         return $name . ' ' . $surname;
     }
 
+    //check if the login submitted matrix values are correct 
     private function checkMatrix($matrix_array, $id) {
         $query = "SELECT customer_id FROM matrix WHERE customer_id = $id";
         foreach ($matrix_array as $key => $value) {
@@ -74,6 +77,7 @@ class db {
         return $row == 1;
     }
 
+    //get the cards numbers belonging to the given customer id
     public function getAccountCards($id) {
         $query = "SELECT account_number, balance, currency, account.card_number, type_name, card_circuit AS circuit "
                 . "FROM account, account_type, card WHERE customer_id = ? "
@@ -86,7 +90,21 @@ class db {
         $result_set = $result->fetch_all(MYSQLI_ASSOC);
         return $result_set;
     }
+    
+    public function getAccountBalance($account_number){
+        if ($account_number == '') {
+            return '';
+        }
+        $query = 'SELECT balance FROM account WHERE account_number = ?';
+        $stmt = $this->conn->prepare($query);
+        $stmt->bind_param('i', $account_number);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $result_set = $result->fetch_array(MYSQLI_ASSOC);
+        return $result_set['balance'];
+    }
 
+    //get the accounts numbers belonging to the given customer id
     public function getAccountsNumber($id) {
         $query = "SELECT account_number FROM account WHERE customer_id = ? ";
         $stmt = $this->conn->prepare($query);
@@ -97,6 +115,7 @@ class db {
         return $result_set;
     }
 
+    //execute a transaction
     public function transaction($cust_id, $cust_account, $amount, $ben_name, $ben_surname, $ben_account, $message, $ip) {
 
         //check whether customer account and beneficiary account are the same
@@ -173,10 +192,11 @@ class db {
 
         //transaction can proceed
         $result = $this->transferMoney($cust_account, $ben_account, $amount, $ip, $message);
-        
+
         return $result;
     }
 
+    //check whether an account is present on the database
     private function checkAccountExists($account) {
         $query = "SELECT customer.customer_id AS id, name, surname FROM account, customer WHERE "
                 . "account_number = ? AND customer.customer_id = account.customer_id";
@@ -227,7 +247,7 @@ class db {
             $result = $stmt->get_result();
             $result_set = $result->fetch_array(MYSQLI_ASSOC);
             $cust_balance = $result_set['balance'];
-            
+
             //get the balance from beneficiary account
             $query = "SELECT balance FROM account WHERE "
                     . "account_number = ?";
@@ -237,43 +257,41 @@ class db {
             $result = $stmt->get_result();
             $result_set = $result->fetch_array(MYSQLI_ASSOC);
             $ben_balance = $result_set['balance'];
-            
+
             //calcolate new balances bcadd bcsub
             $new_customer_balance = $cust_balance - $amount;
             $new_beneficiary_balance = $ben_balance + $amount;
-            
+
             //update cusotmer account with new balance
             $query = 'UPDATE account SET balance = ? WHERE account_number = ?';
             $stmt = $this->conn->prepare($query);
-            $stmt->bind_param('di',$new_customer_balance, $cust_account);
+            $stmt->bind_param('di', $new_customer_balance, $cust_account);
             $stmt->execute();
-            
+
             //update beneficiary account with new balance
             $query = 'UPDATE account SET balance = ? WHERE account_number = ?';
             $stmt = $this->conn->prepare($query);
-            $stmt->bind_param('di',$new_beneficiary_balance, $ben_account);
+            $stmt->bind_param('di', $new_beneficiary_balance, $ben_account);
             $stmt->execute();
-            
+
             //unlock tables
             $this->conn->query('UNLOCK TABLES');
-            
+
             //write on transaction table transaction successfully completed
             $code = $this->writeTransactionLog($cust_account, $amount, $ben_account, $ip, $message, true, NULL);
-            
+
             //commit transaction
             $this->conn->commit();
-            
-           return array('result' => true, 'message' => 'Transaction successfully executed</br></br>Transaction Code: '.$code);
-            
+
+            return array('result' => true, 'message' => 'Transaction successfully executed</br></br>Transaction Code: ' . $code);
         } catch (Exception $e) {
-            $error = 'Transaction Rolled Back: '.$e->getMessage();
+            $error = 'Transaction Rolled Back: ' . $e->getMessage();
             $this->conn->rollback();
             $code = $this->writeTransactionLog($cust_account, $amount, $ben_account, $ip, $message, false, $error);
-            return array('result' => false, 'message' => $error.'<br/>Transaction Code: '.$code);
+            return array('result' => false, 'message' => $error . '<br/>Transaction Code: ' . $code);
         }
     }
-    
-    
+
     //write on the transaction table the successful or aborted transaction
     private function writeTransactionLog($cust_account, $amount, $dest_account, $ip, $message, $flag = false, $error = NULL) {
         $date = date('Y-m-d H:i:s');
@@ -288,6 +306,39 @@ class db {
         $stmt->bind_param('ssiisisss', $transaction_code, $date, $cust_account, $amount, $flag_mysql, $dest_account, $ip, $message, $error);
         $stmt->execute();
         return $transaction_code;
+    }
+
+    //search on transaction table for the executed transaction that satisfy filtering criteria
+    public function search($account, $startDate, $stopDate, $minAmount, $maxAmount) {
+
+        //checking if account number is provided
+        if (strcmp($account, '') == 0) {
+            return array('result' => false, 'error' => 'Select an account number to display statements');
+        }
+
+        //checking if valid start and end dates are provided
+        if (strcmp($startDate, '') != 0 && strcmp($stopDate, '') != 0) {
+            if (strcmp($startDate, $stopDate) > 0) {
+                return array('result' => false, 'error' => 'Start date must be lower than end date');
+            }
+        }
+        //checking if valid max and min values are provided
+        if (strcmp($minAmount, '') != 0 && strcmp($maxAmount, '') != 0) {
+            if ($minAmount >= $maxAmount) {
+                return array('result' => false, 'error' => 'Min amount must be lower than max amount');
+            }
+        }
+        
+        $query = "SELECT transaction_code AS code, operation_time_date AS time_date, transaction_amount AS amount,"
+            ."account, dest_account, message FROM transaction WHERE flag = 'executed'" 
+            ." AND (account = $account OR dest_account = $account) ";
+        $query .=  strcmp($startDate, '') != 0 ? "AND operation_time_date >= '$startDate 23:59:59' " : '';
+        $query .=  strcmp($stopDate, '') != 0 ? "AND operation_time_date <= '$stopDate 23:59:59' " : '';
+        $query .=  strcmp($minAmount, '') != 0 ? "AND transaction_amount >= $minAmount " : '';
+        $query .=  strcmp($maxAmount, '') != 0 ? "AND transaction_amount <= $maxAmount " : '';
+        $result = $this->conn->query($query);
+        $result_set = $result->fetch_all(MYSQLI_ASSOC);
+        return array('result' => true, 'data' => $result_set);           
     }
 
 }

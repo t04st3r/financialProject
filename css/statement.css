@@ -1,10 +1,9 @@
 .search_title {
     padding-top: 30px;
     margin-top: 0px;
-    padding-bottom: 30px;
 }
 
-.container-fluid {
+.table-container {
     margin-top: 20px;
 }
 
@@ -17,6 +16,32 @@ thead {
     font-weight: bold;
 }
 
+tfoot {
+   background-color: #d4d4d4;
+    font-weight: bold; 
+}
+
+.tfooter {
+    text-align: right;
+}
+
 tbody {
     background-color: #faf2cc;
+}
+
+.error{
+    color : red;
+    text-align: center;
+}
+
+.green {
+    color: green;
+}
+
+.form-inline {
+    background-color: whitesmoke;
+    opacity: 0.9;
+    padding: 5px;
+    border-top: #245580 solid 3px;
+    border-bottom: #245580 solid 3px; 
 }
