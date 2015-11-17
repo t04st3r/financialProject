@@ -110,4 +110,5 @@ if (!isset($_SESSION['token']) || !isset($_SESSION['id']) || $_GET['token'] != $
         <script src="js/jquery-2.1.4.min.js"></script>   
         <script src="js/bootstrap.min.js"></script>
 
-    </body>    
+    </body>
+    </html>

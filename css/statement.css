@@ -1,0 +1,22 @@
+.search_title {
+    padding-top: 30px;
+    margin-top: 0px;
+    padding-bottom: 30px;
+}
+
+.container-fluid {
+    margin-top: 20px;
+}
+
+.table  {
+    border: #0f0f0f solid 3px;
+}
+
+thead {
+    background-color: #d4d4d4;
+    font-weight: bold;
+}
+
+tbody {
+    background-color: #faf2cc;
+}

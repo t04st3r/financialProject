@@ -16,7 +16,7 @@
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav nav-justified">
         <li><a href="welcome.php?token=<?php echo $token ?>">Overview</a></li>
-        <li><a href="#">Account Statement</a></li>
+        <li><a href="statement.php?token=<?php echo $token ?>">Account Statement</a></li>
         <li><a href="transaction.php?token=<?php echo $token ?>">Money Transfer</a></li>
         <li><a href="#">Finance</a></li>
         <li><a href="branch.php?token=<?php echo $token ?>">Branches and ATM</a></li>
