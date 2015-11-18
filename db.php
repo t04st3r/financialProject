@@ -340,5 +340,13 @@ class db {
         $result_set = $result->fetch_all(MYSQLI_ASSOC);
         return array('result' => true, 'data' => $result_set);           
     }
+    
+    //get all the meaningful information about bank branches
+    public function getBranches(){
+        $query = "SELECT latitude, longitude, address, city, phone, open_time FROM branch";
+        $result = $this->conn->query($query);
+        $result_set = $result->fetch_all(MYSQLI_ASSOC);
+        return $result_set; 
+    }
 
 }

@@ -5,3 +5,20 @@
     border: blueviolet solid 5px;
 }
 
+
+.table  {
+    border: #0f0f0f solid 3px;
+    position: absolute;
+    top: 75px;
+    left: 580px;
+    width: 700px;
+}
+
+thead {
+    background-color: #d4d4d4;
+    font-weight: bold;
+}
+
+tbody {
+    background-color: #faf2cc;
+}
