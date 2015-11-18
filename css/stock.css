@@ -1,0 +1,20 @@
+.form-inline {
+    background-color: whitesmoke;
+    opacity: 0.9;
+    padding: 5px;
+    border-top: #245580 solid 3px;
+    border-bottom: #245580 solid 3px;
+}
+
+.search_title {
+    padding-top: 30px;
+    margin-top: 0px;
+}
+
+#visualization {
+    margin-top: 30px;
+    margin-left: 150px;
+    
+}
+
+

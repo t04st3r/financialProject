@@ -18,7 +18,7 @@
         <li><a href="welcome.php?token=<?php echo $token ?>">Overview</a></li>
         <li><a href="statement.php?token=<?php echo $token ?>">Account Statement</a></li>
         <li><a href="transaction.php?token=<?php echo $token ?>">Money Transfer</a></li>
-        <li><a href="#">Finance</a></li>
+        <li><a href="stock.php?token=<?php echo $token ?>">Finance</a></li>
         <li><a href="branch.php?token=<?php echo $token ?>">Branches and ATM</a></li>
       </ul>
     </div><!-- /.navbar-collapse -->

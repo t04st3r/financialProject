@@ -52,7 +52,7 @@ require_once './modules/menubar.php';
             <form class="form-inline" method="GET">
                 <div class="form-group">
                     <label for="selectAccount">Account</label>
-                    <select name="account" class="form-control" id="selectAccount" name="customer_account">
+                    <select name="account" class="form-control" id="selectAccount">
 <?php
 $account_number_array = $db->getAccountCards($id);
 foreach ($account_number_array as $key => $value) {
