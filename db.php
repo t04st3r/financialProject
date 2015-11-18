@@ -348,5 +348,12 @@ class db {
         $result_set = $result->fetch_all(MYSQLI_ASSOC);
         return $result_set; 
     }
-
+    
+    //get all the meaningful information about bank ATM's
+    public function getATM(){
+        $query = "SELECT latitude, longitude, address, state FROM atm";
+        $result = $this->conn->query($query);
+        $result_set = $result->fetch_all(MYSQLI_ASSOC);
+        return $result_set; 
+    }
 }

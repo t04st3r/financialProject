@@ -10,10 +10,9 @@ if (!isset($_SESSION['token']) || !isset($_SESSION['id']) || $_GET['token'] != $
 }
 
 $id = $_SESSION['id'];
-$token = $_SESSION['token'];
 $db = new db();
 $customer_name = $db->getUserNameSurname($id);
-$branches_array = $db->getBranches();
+$ATM_array = $db->getATM();
 ?>
 <!DOCTYPE html>
 <html>
@@ -35,20 +34,18 @@ $branches_array = $db->getBranches();
                 var infoWindow = new google.maps.InfoWindow();
                 var marker;
 <?php
-foreach ($branches_array as $branch) {
+foreach ($ATM_array as $atm) {
     echo 'marker =new google.maps.Marker({
-                    position: new google.maps.LatLng('.$branch['latitude'].','.$branch['longitude'].'),
+                    position: new google.maps.LatLng('.$atm['latitude'].','.$atm['longitude'].'),
                     map: map,
-                    title: "'.$branch['city'].'"
+                    title: "'.$atm['address'].'"
                 });
                 google.maps.event.addListener(marker, "click", (function (marker) {
                     return function () {
                         infoWindow.setContent(
                                 "<div>" +
-                                "<h4>'.$branch['city'].'</h4>" +
-                                "<p><span><strong>Address: </strong></span>'.$branch['address'].'</p>" +
-                                "<p><span><strong>Phone: </strong></span>'.$branch['phone'].'</p>" +
-                                "<p><span><strong>Opening Time: </strong></span>'.$branch['open_time'].'</p>" +    
+                                "<h4>'.$atm['address'].'</h4>" +
+                                "<p><span><strong>State: </strong></span>'.$atm['state'].'</p>" +    
                                 "</div>"
                                 );
                         infoWindow.open(map, marker);
@@ -68,8 +65,8 @@ echo '}';
         require_once './modules/menubar.php';
         ?>
         <div id="background" style="padding: 30px;">
-            <h4>Bank Branches Table and Map Location</h4>
-            <h5><strong><a href="atm.php?token=<?php echo $token; ?>">Check ATM Table and Location</a></strong></h5>
+            <h4>Bank ATM Table and Map Location</h4>
+            <h5><strong><a href="branch.php?token=<?php echo $token; ?>">Check Branches Table and Location</a></strong></h5>
             <div id="map"></div>
             <h4 class="error"><?php echo $error; ?></h4>
             <table class="table table-bordered">
@@ -79,24 +76,17 @@ echo '}';
                             Address
                         </td>
                         <td>
-                            City
-                        </td>
-                        <td>
-                            Phone Number
-                        </td>
-                        <td>
-                            Opening Time
+                           State
                         </td>
                     </tr>
                 </thead>
                 <tbody>
                     <?php
-                    foreach ($branches_array as $row) {
+                    foreach ($ATM_array as $row) {
                         echo '<tr>';
                         echo '<td>' . $row['address'] . '</td>';
-                        echo '<td>' . $row['city'] . '</td>';
-                        echo '<td>' . $row['phone'] . '</td>';
-                        echo '<td>' . $row['open_time'] . '</td>';
+                        $class = strcmp($row['state'], 'busy') == 0 ? 'state_busy' : 'state_av';
+                        echo '<td class="'.$class.'">' . $row['state'] . '</td>';
                         echo '</tr>';
                     }
                     ?>
