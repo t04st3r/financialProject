@@ -82,3 +82,16 @@
 .balance_value_green{
     color: green;
 }
+
+#total_asset {
+    background-color: #1b6d85;
+    margin-top: 16px;
+    text-align: left;
+}
+
+#total_asset p {
+    color: whitesmoke;
+    font-weight: bold;
+    margin-left: 15px;
+    font-size: large;
+}
