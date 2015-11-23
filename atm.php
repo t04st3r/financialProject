@@ -5,12 +5,14 @@ require_once './db.php';
 
 
 
+$id = isset($_SESSION['id']) ? $_SESSION['id'] : 'unknown';
+$db = new db();
+
 if (!isset($_SESSION['token']) || !isset($_SESSION['id']) || $_GET['token'] != $_SESSION['token']) {
+    $db->writeLog('ATM', 'Token and session check failed for atm.php page user ID: '.$id);
     header('Location: http://' . $_SERVER['HTTP_HOST'] . '?err=auth');
 }
 
-$id = $_SESSION['id'];
-$db = new db();
 $customer_name = $db->getUserNameSurname($id);
 $ATM_array = $db->getATM();
 ?>

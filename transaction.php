@@ -5,7 +5,11 @@ require_once './db.php';
 
 
 
+$id = isset($_SESSION['id']) ? $_SESSION['id'] : 'unknown';
+$db = new db();
+
 if (!isset($_SESSION['token']) || !isset($_SESSION['id']) || $_GET['token'] != $_SESSION['token']) {
+    $db->writeLog('Transaction', 'Token and session check failed for transaction.php page user ID: '.$id);
     header('Location: http://' . $_SERVER['HTTP_HOST'] . '?err=auth');
 }
 
@@ -20,10 +24,7 @@ if (isset($_POST['ben_account']) && isset($_POST['customer_account']) && isset($
     $ben_account = filter_input(INPUT_POST, 'ben_account', FILTER_SANITIZE_SPECIAL_CHARS);
     $message = isset($_POST['message']) ? filter_input(INPUT_POST, 'message', FILTER_SANITIZE_SPECIAL_CHARS) : '';
     $ip = $_SERVER['REMOTE_ADDR'];
-    $cust_id = $_SESSION['id'];
-
-    $db = new db;
-    $result = $db->transaction($cust_id, $cust_account, $amount, $ben_name, $ben_surname, $ben_account, $message, $ip);
+    $result = $db->transaction($id, $cust_account, $amount, $ben_name, $ben_surname, $ben_account, $message, $ip);
 }
 
 $error = !$result['result'];
@@ -40,8 +41,6 @@ require_once './modules/header.php';
     <body>
 <?php
 require_once './modules/logo.php';
-$id = $_SESSION['id'];
-$db = new db();
 $customer_name = $db->getUserNameSurname($id);
 echo '<p id="user_message">Logged As: ' . $customer_name . ' <a href="/index.php?logout=true">Log Out</a></p>';
 require_once './modules/menubar.php';

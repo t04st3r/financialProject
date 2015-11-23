@@ -5,31 +5,39 @@ session_start();
 
 require_once 'db.php';
 
+
+$db = new db();
+//sanitize input to prevent SQL Injection (prepared statement are also used on db class)
+$username = isset($_POST['user_name']) ? filter_input(INPUT_POST, 'user_name', FILTER_SANITIZE_SPECIAL_CHARS) : 'unknown';
+$password = isset($_POST['user_name']) ? md5($_POST['pass']) : 'unknown';
+
 if(!isset($_SESSION['hidden_check'])){
+    $db->writeLog('Login', 'Hidden field session check failed User: '.$username.' Password: '.$password);
     login_fail();
 }
 
 //Check for the hidden input value (CSRF check)
 if (!isset($_POST['hidden_check']) || $_POST['hidden_check'] != $_SESSION['hidden_check']) {
+    $db->writeLog('Login', 'Hidden field form on POST check failed User: '.$username.' Password: '.$password);
     login_fail();
 }
 if (!check_logindata_exists()) {
+    $db->writeLog('Login', 'Login data check failed User: '.$username.' Password: '.$password);
     login_fail();
 }
 
-//sanitize input to prevent SQL Injection (prepared statement are also used on db class)
-$username = filter_input(INPUT_POST, 'user_name', FILTER_SANITIZE_SPECIAL_CHARS);
-$password = md5($_POST['pass']);
+
 $matrix_array = prepare_matrix_array();
-$db = new db();
 $result = $db->checkLogin($username, $password, $matrix_array);
 if(!$result['result']){
+    $db->writeLog('Login', 'Incorrect credentials authentication for User: '.$username.' Password: '.$password);
     login_fail($result['matrix']);
 }else{
     //login successful, let's jump into the welcome page guys!
     $_SESSION['id'] = $result['id'];
     $token = generate_token();
     $_SESSION['token'] = $token;
+    $db->writeLog('Login', 'User: '.$username.' successfully authenticated');
     header('Location: http://' . $_SERVER['HTTP_HOST'] . '/welcome.php?token='.$token);
 }
 

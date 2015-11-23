@@ -17,7 +17,11 @@ require_once './db.php';
 
 
 
+$id = isset($_SESSION['id']) ? $_SESSION['id'] : 'unknown';
+$db = new db();
+
 if (!isset($_SESSION['token']) || !isset($_SESSION['id']) || $_GET['token'] != $_SESSION['token']) {
+    $db->writeLog('Stock', 'Token and session check failed for stock.php page user ID: '.$id);
     header('Location: http://' . $_SERVER['HTTP_HOST'] . '?err=auth');
 }
 
@@ -132,8 +136,6 @@ if ($data_response) {
     <body>
 <?php
 require_once './modules/logo.php';
-$id = $_SESSION['id'];
-$db = new db();
 $customer_name = $db->getUserNameSurname($id);
 echo '<p id="user_message">Logged As: ' . $customer_name . ' <a href="/index.php?logout=true">Log Out</a></p>';
 require_once './modules/menubar.php';

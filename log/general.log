@@ -1,0 +1,59 @@
+[2015-11-23 11:33:49 IP: 127.0.0.1] ACTION: Statement
+MESSAGE: User ID: 1 just request the statement for the account: 100159745 Start Date:  End Date:  Min Amount:  Max Amount: 
+
+[2015-11-23 11:35:13 IP: 127.0.0.1] ACTION: Statement
+MESSAGE: User ID: 1 just request the statement for the account: 888888188 Start Date: 2015-08-02 End Date: 2015-11-18 Min Amount: 120 Max Amount: 15000
+
+[2015-11-23 11:36:29 IP: 127.0.0.1] ACTION: Statement
+MESSAGE: User ID: 1 just request the statement for the account: 100159745 Start Date:  End Date:  Min Amount:  Max Amount: 
+
+[2015-11-23 12:12:04 IP: 127.0.0.1] ACTION: Transaction
+MESSAGE: Token and session check failed for transaction.php page user ID: unknown
+
+[2015-11-23 12:14:51 IP: 127.0.0.1] ACTION: Login
+MESSAGE: User: raffo successfully authenticated
+
+[2015-11-23 12:15:29 IP: 127.0.0.1] ACTION: Statement
+MESSAGE: User ID: 1 just request the statement for the account: 100159745 Start Date:  End Date:  Min Amount:  Max Amount: 
+
+[2015-11-23 12:22:48 IP: 127.0.0.1] ACTION: Transaction
+MESSAGE: Transaction Code: 20151123122248
+Customer ID: 1
+Transferring Account: 100159745
+Amount: 43234
+Beneficiary Name: John Smith
+Beneficiary Surname: Richard
+Beneficiary Account: 43234234
+Error Message: unknown beneficiary account
+
+[2015-11-23 12:35:37 IP: 127.0.0.1] ACTION: Transaction
+MESSAGE: Transaction Code: 20151123123537
+Customer ID: 1
+Transferring Account: 100159745
+Amount: 43234
+Beneficiary Name: John Smith
+Beneficiary Surname: Richard
+Beneficiary Account: 43234234
+Error Message: unknown beneficiary account
+
+[2015-11-23 12:43:21 IP: 127.0.0.1] ACTION: Statement
+MESSAGE: Error on account statement, User ID: 1 Account No:  Start Date:  End Date:  Min Amount:  Max Amount:  Error: Select an account number to display statements
+
+[2015-11-23 12:43:26 IP: 127.0.0.1] ACTION: Statement
+MESSAGE: Error on account statement, User ID: 1 Account No:  Start Date:  End Date:  Min Amount:  Max Amount:  Error: Select an account number to display statements
+
+[2015-11-23 12:43:29 IP: 127.0.0.1] ACTION: Statement
+MESSAGE: User ID: 1 just request the statement for the account: 888888188 Start Date:  End Date:  Min Amount:  Max Amount: 
+
+[2015-11-23 12:49:28 IP: 127.0.0.1] ACTION: Statement
+MESSAGE: Error on account statement, User ID: 1 Account No:  Start Date:  End Date:  Min Amount:  Max Amount:  Error: Select an account number to display statements
+
+[2015-11-23 12:49:55 IP: 127.0.0.1] ACTION: Statement
+MESSAGE: Error on account statement, User ID: 1 Account No:  Start Date:  End Date:  Min Amount:  Max Amount:  Error: Select an account number to display statements
+
+[2015-11-23 12:50:20 IP: 127.0.0.1] ACTION: Statement
+MESSAGE: User ID: 1 just request the statement for the account: 100159745 Start Date:  End Date:  Min Amount:  Max Amount: 
+
+[2015-11-23 13:02:25 IP: 127.0.0.1] ACTION: Statement
+MESSAGE: User ID: 1 just request the statement for the account: 888888188 Start Date:  End Date:  Min Amount:  Max Amount: 
+

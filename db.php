@@ -122,6 +122,9 @@ class db {
         if (strcmp($cust_account, $ben_account) == 0) {
             $error = 'customer account cannot be equal to beneficiary account';
             $t_code = $this->writeTransactionLog($cust_account, $amount, $ben_account, $ip, $message, false, $error);
+            $this->writeLog('Transaction', 'Transaction Code: '.$t_code.PHP_EOL.'Customer ID: '.$cust_id.PHP_EOL.'Transferring Account: '.$cust_account.PHP_EOL.'Amount: '.$amount.''
+                    .PHP_EOL. 'Beneficiary Name: '.$ben_name.PHP_EOL.'Beneficiary Surname: '.$ben_surname.PHP_EOL. 'Beneficiary Account: '
+                    .$ben_account.PHP_EOL.'Error Message: '.$error);
             return array('result' => false,
                 'message' => 'Transaction Aborted:<br/>' . $error . '<br/>Transaction Code: ' . $t_code);
         }
@@ -130,6 +133,9 @@ class db {
         if (!is_numeric($amount) || !is_numeric($cust_account) || !is_numeric($ben_account)) {
             $error = 'bad data format';
             $t_code = $this->writeTransactionLog($cust_account, $amount, $ben_account, $ip, $message, false, $error);
+            $this->writeLog('Transaction', 'Transaction Code: '.$t_code.PHP_EOL.'Customer ID: '.$cust_id.PHP_EOL.'Transferring Account: '.$cust_account.PHP_EOL.'Amount: '.$amount.''
+                    .PHP_EOL. 'Beneficiary Name: '.$ben_name.PHP_EOL.'Beneficiary Surname: '.$ben_surname.PHP_EOL. 'Beneficiary Account: '
+                    .$ben_account.PHP_EOL.'Error Message: '.$error);
             return array('result' => false,
                 'message' => 'Transaction Aborted:<br/>' . $error . '<br/>Transaction Code: ' . $t_code);
         }
@@ -138,6 +144,9 @@ class db {
         if ($amount < 100) {
             $error = 'minimun amount transferable is 100.00 $HK';
             $t_code = $this->writeTransactionLog($cust_account, $amount, $ben_account, $ip, $message, false, $error);
+            $this->writeLog('Transaction', 'Transaction Code: '.$t_code.PHP_EOL.'Customer ID: '.$cust_id.PHP_EOL.'Transferring Account: '.$cust_account.PHP_EOL.'Amount: '.$amount.''
+                    .PHP_EOL. 'Beneficiary Name: '.$ben_name.PHP_EOL.'Beneficiary Surname: '.$ben_surname.PHP_EOL. 'Beneficiary Account: '
+                    .$ben_account.PHP_EOL.'Error Message: '.$error);
             return array('result' => false,
                 'message' => 'Transaction Aborted:<br/>' . $error . '<br/>Transaction Code: ' . $t_code);
         }
@@ -146,6 +155,9 @@ class db {
         if ($amount > 500000) {
             $error = 'maximum amount transferable is 500,000.00 $HK, please contact your branch director for further information';
             $t_code = $this->writeTransactionLog($cust_account, $amount, $ben_account, $ip, $message, false, $error);
+            $this->writeLog('Transaction', 'Transaction Code: '.$t_code.PHP_EOL.'Customer ID: '.$cust_id.PHP_EOL.'Transferring Account: '.$cust_account.PHP_EOL.'Amount: '.$amount.''
+                    .PHP_EOL. 'Beneficiary Name: '.$ben_name.PHP_EOL.'Beneficiary Surname: '.$ben_surname.PHP_EOL. 'Beneficiary Account: '
+                    .$ben_account.PHP_EOL.'Error Message: '.$error);
             return array('result' => false,
                 'message' => 'Transaction Aborted:<br/>' . $error . '<br/>Transaction Code: ' . $t_code);
         }
@@ -155,6 +167,9 @@ class db {
         if (!$result_cust_account['result']) {
             $error = 'unknown customer account';
             $t_code = $this->writeTransactionLog($cust_account, $amount, $ben_account, $ip, $message, false, $error);
+            $this->writeLog('Transaction', 'Transaction Code: '.$t_code.PHP_EOL.'Customer ID: '.$cust_id.PHP_EOL.'Transferring Account: '.$cust_account.PHP_EOL.'Amount: '.$amount.''
+                    .PHP_EOL. 'Beneficiary Name: '.$ben_name.PHP_EOL.'Beneficiary Surname: '.$ben_surname.PHP_EOL. 'Beneficiary Account: '
+                    .$ben_account.PHP_EOL.'Error Message: '.$error);
             return array('result' => false,
                 'message' => 'Transaction Aborted:<br/>' . $error . '<br/>Transaction Code: ' . $t_code);
         }
@@ -165,6 +180,9 @@ class db {
         if (!$result_account_exists['result']) {
             $error = 'unknown beneficiary account';
             $t_code = $this->writeTransactionLog($cust_account, $amount, $ben_account, $ip, $message, false, $error);
+            $this->writeLog('Transaction', 'Transaction Code: '.$t_code.PHP_EOL.'Customer ID: '.$cust_id.PHP_EOL.'Transferring Account: '.$cust_account.PHP_EOL.'Amount: '.$amount.''
+                    .PHP_EOL. 'Beneficiary Name: '.$ben_name.PHP_EOL.'Beneficiary Surname: '.$ben_surname.PHP_EOL. 'Beneficiary Account: '
+                    .$ben_account.PHP_EOL.'Error Message: '.$error);
             return array('result' => false,
                 'message' => 'Transaction Aborted:<br/>' . $error . '<br/>Transaction Code: ' . $t_code);
         }
@@ -176,6 +194,9 @@ class db {
         if (strcasecmp($array_result['name'], $ben_name) != 0 || strcasecmp($array_result['surname'], $ben_surname) != 0) {
             $error = 'unknown beneficiary name';
             $t_code = $this->writeTransactionLog($cust_account, $amount, $ben_account, $ip, $message, false, $error);
+            $this->writeLog('Transaction', 'Transaction Code: '.$t_code.PHP_EOL.'Customer ID: '.$cust_id.PHP_EOL.'Transferring Account: '.$cust_account.PHP_EOL.'Amount: '.$amount.''
+                    .PHP_EOL. 'Beneficiary Name: '.$ben_name.PHP_EOL.'Beneficiary Surname: '.$ben_surname.PHP_EOL. 'Beneficiary Account: '
+                    .$ben_account.PHP_EOL.'Error Message: '.$error);
             return array('result' => false,
                 'message' => 'Transaction Aborted:<br/>' . $error . '<br/>Transaction Code: ' . $t_code);
         }
@@ -186,12 +207,15 @@ class db {
         if (!$check_funds) {
             $error = 'insufficient funds to perform the transaction';
             $t_code = $this->writeTransactionLog($cust_account, $amount, $ben_account, $ip, $message, false, $error);
+            $this->writeLog('Transaction', 'Transaction Code: '.$t_code.PHP_EOL.'Customer ID: '.$cust_id.PHP_EOL.'Transferring Account: '.$cust_account.PHP_EOL.'Amount: '.$amount.''
+                    .PHP_EOL. 'Beneficiary Name: '.$ben_name.PHP_EOL.'Beneficiary Surname: '.$ben_surname.PHP_EOL. 'Beneficiary Account: '
+                    .$ben_account.PHP_EOL.'Error Message: '.$error);
             return array('result' => false,
                 'message' => 'Transaction Aborted:<br/>' . $error . '<br/>Transaction Code: ' . $t_code);
         }
 
         //transaction can proceed
-        $result = $this->transferMoney($cust_account, $ben_account, $amount, $ip, $message);
+        $result = $this->transferMoney($cust_account, $ben_account, $amount, $ip, $message, $ben_name, $ben_surname, $cust_id);
 
         return $result;
     }
@@ -231,7 +255,7 @@ class db {
         }
     }
 
-    private function transferMoney($cust_account, $ben_account, $amount, $ip, $message) {
+    private function transferMoney($cust_account, $ben_account, $amount, $ip, $message, $ben_name, $ben_surname, $cust_id) {
         try {
             //begin transaction
             $this->conn->begin_transaction();
@@ -258,7 +282,7 @@ class db {
             $result_set = $result->fetch_array(MYSQLI_ASSOC);
             $ben_balance = $result_set['balance'];
 
-            //calcolate new balances bcadd bcsub
+            //calcolate new balances
             $new_customer_balance = $cust_balance - $amount;
             $new_beneficiary_balance = $ben_balance + $amount;
 
@@ -288,6 +312,9 @@ class db {
             $error = 'Transaction Rolled Back: ' . $e->getMessage();
             $this->conn->rollback();
             $code = $this->writeTransactionLog($cust_account, $amount, $ben_account, $ip, $message, false, $error);
+            $this->writeLog('Transaction', 'Transaction Code: '.$code.PHP_EOL.'Customer ID: '.$cust_id.PHP_EOL.'Transferring Account: '.$cust_account.PHP_EOL.'Amount: '.$amount.''
+                    .PHP_EOL. 'Beneficiary Name: '.$ben_name.PHP_EOL.'Beneficiary Surname: '.$ben_surname.PHP_EOL. 'Beneficiary Account: '
+                    .$ben_account.PHP_EOL.'Error Message: '.$error);
             return array('result' => false, 'message' => $error . '<br/>Transaction Code: ' . $code);
         }
     }
@@ -355,5 +382,14 @@ class db {
         $result = $this->conn->query($query);
         $result_set = $result->fetch_all(MYSQLI_ASSOC);
         return $result_set; 
+    }
+    
+    //write log on general.log file
+    public function writeLog($action, $message){
+        $date = date('Y-m-d H:i:s');
+        $ip = $_SERVER['REMOTE_ADDR'];
+        $file = $_SERVER['DOCUMENT_ROOT'].'/log/general.log';
+        $content = '['.$date.' IP: '.$ip.'] ACTION: '.$action.PHP_EOL.'MESSAGE: '.$message.PHP_EOL.PHP_EOL;        
+        file_put_contents($file, $content, FILE_APPEND | LOCK_EX);
     }
 }

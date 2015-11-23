@@ -3,9 +3,11 @@ session_start();
 
 require_once './db.php';
 
-
+$id = isset($_SESSION['id']) ? $_SESSION['id'] : 'unknown';
+$db = new db();
 
 if (!isset($_SESSION['token']) || !isset($_SESSION['id']) || $_GET['token'] != $_SESSION['token']) {
+    $db->writeLog('Statement', 'Token and session check failed for statement.php page user ID: '.$id);
     header('Location: http://' . $_SERVER['HTTP_HOST'] . '?err=auth');
 }
 
@@ -29,8 +31,6 @@ require_once './modules/header.php';
     <body>
 <?php
 require_once './modules/logo.php';
-$id = $_SESSION['id'];
-$db = new db();
 $token = $_GET['token'];
 $customer_name = $db->getUserNameSurname($id);
 $result = $db->search($account, $startDate, $endDate, $minAmount, $maxAmount);
@@ -38,8 +38,12 @@ $error = '';
 $array_result = array();
 if(!$result['result']){
     $error = $result['error'];
+    $db->writeLog('Statement', 'Error on account statement, User ID: '.$id.' Account No: '.$account.' Start Date: '
+            .$startDate.' End Date: '.$endDate.' Min Amount: '.$minAmount.' Max Amount: '.$maxAmount.' Error: '.$error);
 }else{
     $array_result = $result['data'];
+    $db->writeLog('Statement', 'User ID: '.$id.' just request the statement for the account: '.$account.' Start Date: '.$startDate.
+            ' End Date: '.$endDate.' Min Amount: '.$minAmount.' Max Amount: '.$maxAmount);
 }
    
 echo '<p id="user_message">Logged As: ' . $customer_name . ' <a href="/index.php?logout=true">Log Out</a></p>';

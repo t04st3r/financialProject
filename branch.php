@@ -4,14 +4,15 @@ session_start();
 require_once './db.php';
 
 
+$id = isset($_SESSION['id']) ? $_SESSION['id'] : 'unknown';
+$db = new db();
 
 if (!isset($_SESSION['token']) || !isset($_SESSION['id']) || $_GET['token'] != $_SESSION['token']) {
+    $db->writeLog('Branch', 'Token and session check failed for branch.php page user ID: '.$id);
     header('Location: http://' . $_SERVER['HTTP_HOST'] . '?err=auth');
 }
 
-$id = $_SESSION['id'];
 $token = $_SESSION['token'];
-$db = new db();
 $customer_name = $db->getUserNameSurname($id);
 $branches_array = $db->getBranches();
 ?>

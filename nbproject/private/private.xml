@@ -3,12 +3,17 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/home/raffaele/public_html/FinancialProject/README.md</file>
+            <file>file:/home/raffaele/public_html/FinancialProject/branch.php</file>
+            <file>file:/home/raffaele/public_html/FinancialProject/css/branch.css</file>
             <file>file:/home/raffaele/public_html/FinancialProject/index.php</file>
+            <file>file:/home/raffaele/public_html/FinancialProject/css/statement.css</file>
             <file>file:/home/raffaele/public_html/FinancialProject/db.php</file>
             <file>file:/home/raffaele/public_html/FinancialProject/welcome.php</file>
+            <file>file:/home/raffaele/public_html/FinancialProject/stock.php</file>
+            <file>file:/home/raffaele/public_html/FinancialProject/log/general.log</file>
+            <file>file:/home/raffaele/public_html/FinancialProject/statement.php</file>
+            <file>file:/home/raffaele/public_html/FinancialProject/atm.php</file>
             <file>file:/home/raffaele/public_html/FinancialProject/check_login.php</file>
-            <file>file:/home/raffaele/public_html/FinancialProject/css/main.css</file>
         </group>
     </open-files>
 </project-private>
