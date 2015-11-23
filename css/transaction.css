@@ -8,9 +8,16 @@
     font-weight: bold;
     text-align: center;
 }
+ 
+.success_message {
+    padding-top: 20px;
+    text-align: left;
+    background-color: whitesmoke;
+    opacity: 0.8;
+    padding-bottom: 20px;
+    padding-left: 10px;
+}
 
-.no_error {
-    color : green;
+.success_message h4 h5 {
     font-weight: bold;
-    text-align: center
 }

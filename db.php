@@ -307,7 +307,7 @@ class db {
             //commit transaction
             $this->conn->commit();
 
-            return array('result' => true, 'message' => 'Transaction successfully executed</br></br>Transaction Code: ' . $code);
+            return array('result' => true, 'code' => $code);
         } catch (Exception $e) {
             $error = 'Transaction Rolled Back: ' . $e->getMessage();
             $this->conn->rollback();

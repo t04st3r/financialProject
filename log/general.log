@@ -57,3 +57,51 @@ MESSAGE: User ID: 1 just request the statement for the account: 100159745 Start 
 [2015-11-23 13:02:25 IP: 127.0.0.1] ACTION: Statement
 MESSAGE: User ID: 1 just request the statement for the account: 888888188 Start Date:  End Date:  Min Amount:  Max Amount: 
 
+[2015-11-23 13:41:20 IP: 127.0.0.1] ACTION: Login
+MESSAGE: User: raffo successfully authenticated
+
+[2015-11-23 13:41:42 IP: 127.0.0.1] ACTION: Login
+MESSAGE: Incorrect credentials authentication for User: raffo Password: 1e697afe46099081cd20b0d6277ca544
+
+[2015-11-23 15:11:30 IP: ::1] ACTION: Login
+MESSAGE: User: raffo successfully authenticated
+
+[2015-11-23 15:27:34 IP: ::1] ACTION: Login
+MESSAGE: User: raffo successfully authenticated
+
+[2015-11-23 15:27:44 IP: ::1] ACTION: Statement
+MESSAGE: User ID: 1 just request the statement for the account: 888888188 Start Date:  End Date:  Min Amount:  Max Amount: 
+
+[2015-11-23 15:27:47 IP: ::1] ACTION: Statement
+MESSAGE: Error on account statement, User ID: 1 Account No:  Start Date:  End Date:  Min Amount:  Max Amount:  Error: Select an account number to display statements
+
+[2015-11-23 16:17:38 IP: ::1] ACTION: Login
+MESSAGE: User: raffo successfully authenticated
+
+[2015-11-23 17:05:20 IP: ::1] ACTION: Statement
+MESSAGE: Error on account statement, User ID: 1 Account No:  Start Date:  End Date:  Min Amount:  Max Amount:  Error: Select an account number to display statements
+
+[2015-11-23 18:48:17 IP: 127.0.0.1] ACTION: Login
+MESSAGE: User: John successfully authenticated
+
+[2015-11-23 18:48:21 IP: 127.0.0.1] ACTION: Statement
+MESSAGE: User ID: 2 just request the statement for the account: 62743048 Start Date:  End Date:  Min Amount:  Max Amount: 
+
+[2015-11-23 18:56:04 IP: 127.0.0.1] ACTION: Statement
+MESSAGE: Error on account statement, User ID: 2 Account No:  Start Date:  End Date:  Min Amount:  Max Amount:  Error: Select an account number to display statements
+
+[2015-11-23 18:56:09 IP: 127.0.0.1] ACTION: Statement
+MESSAGE: User ID: 2 just request the statement for the account: 62743048 Start Date:  End Date:  Min Amount:  Max Amount: 
+
+[2015-11-23 18:56:32 IP: ::1] ACTION: Statement
+MESSAGE: Error on account statement, User ID: 1 Account No:  Start Date:  End Date:  Min Amount:  Max Amount:  Error: Select an account number to display statements
+
+[2015-11-23 18:56:38 IP: ::1] ACTION: Statement
+MESSAGE: User ID: 1 just request the statement for the account: 888888188 Start Date:  End Date:  Min Amount:  Max Amount: 
+
+[2015-11-23 18:58:55 IP: 127.0.0.1] ACTION: Statement
+MESSAGE: User ID: 2 just request the statement for the account: 62743048 Start Date:  End Date:  Min Amount:  Max Amount: 
+
+[2015-11-23 18:59:08 IP: ::1] ACTION: Statement
+MESSAGE: User ID: 1 just request the statement for the account: 888888188 Start Date:  End Date:  Min Amount:  Max Amount: 
+
