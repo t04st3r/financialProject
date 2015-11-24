@@ -105,3 +105,96 @@ MESSAGE: User ID: 2 just request the statement for the account: 62743048 Start D
 [2015-11-23 18:59:08 IP: ::1] ACTION: Statement
 MESSAGE: User ID: 1 just request the statement for the account: 888888188 Start Date:  End Date:  Min Amount:  Max Amount: 
 
+[2015-11-24 09:11:26 IP: ::1] ACTION: Statement
+MESSAGE: Token and session check failed for statement.php page user ID: unknown
+
+[2015-11-24 09:11:26 IP: ::1] ACTION: Statement
+MESSAGE: User ID: unknown just request the statement for the account: 888888188 Start Date:  End Date:  Min Amount:  Max Amount: 
+
+[2015-11-24 09:13:34 IP: 127.0.0.1] ACTION: Statement
+MESSAGE: Token and session check failed for statement.php page user ID: unknown
+
+[2015-11-24 09:13:34 IP: 127.0.0.1] ACTION: Statement
+MESSAGE: User ID: unknown just request the statement for the account: 62743048 Start Date:  End Date:  Min Amount:  Max Amount: 
+
+[2015-11-24 09:14:54 IP: ::1] ACTION: Login
+MESSAGE: User: raffo successfully authenticated
+
+[2015-11-24 09:15:13 IP: 127.0.0.1] ACTION: Login
+MESSAGE: User: John successfully authenticated
+
+[2015-11-24 09:15:37 IP: ::1] ACTION: Statement
+MESSAGE: User ID: 1 just request the statement for the account: 100159745 Start Date:  End Date:  Min Amount:  Max Amount: 
+
+[2015-11-24 09:17:26 IP: ::1] ACTION: Statement
+MESSAGE: User ID: 1 just request the statement for the account: 888888188 Start Date:  End Date:  Min Amount:  Max Amount: 
+
+[2015-11-24 09:17:43 IP: ::1] ACTION: Statement
+MESSAGE: User ID: 1 just request the statement for the account: 100159745 Start Date:  End Date:  Min Amount:  Max Amount: 
+
+[2015-11-24 09:18:13 IP: 127.0.0.1] ACTION: Statement
+MESSAGE: User ID: 2 just request the statement for the account: 62743048 Start Date:  End Date:  Min Amount:  Max Amount: 
+
+[2015-11-24 09:18:58 IP: ::1] ACTION: Statement
+MESSAGE: Error on account statement, User ID: 1 Account No:  Start Date:  End Date:  Min Amount:  Max Amount:  Error: Select an account number to display statements
+
+[2015-11-24 09:19:13 IP: ::1] ACTION: Statement
+MESSAGE: User ID: 1 just request the statement for the account: 100159745 Start Date:  End Date:  Min Amount:  Max Amount: 
+
+[2015-11-24 09:22:49 IP: ::1] ACTION: Statement
+MESSAGE: Error on account statement, User ID: 1 Account No:  Start Date:  End Date:  Min Amount:  Max Amount:  Error: Select an account number to display statements
+
+[2015-11-24 09:33:04 IP: 127.0.0.1] ACTION: Login
+MESSAGE: User: raffo successfully authenticated
+
+[2015-11-24 09:33:38 IP: 127.0.0.1] ACTION: Login
+MESSAGE: User: John successfully authenticated
+
+[2015-11-24 09:33:52 IP: 127.0.0.1] ACTION: Statement
+MESSAGE: User ID: 2 just request the statement for the account: 62743048 Start Date:  End Date:  Min Amount:  Max Amount: 
+
+[2015-11-24 09:34:06 IP: 127.0.0.1] ACTION: Statement
+MESSAGE: User ID: 1 just request the statement for the account: 888888188 Start Date:  End Date:  Min Amount:  Max Amount: 
+
+[2015-11-24 09:35:20 IP: 127.0.0.1] ACTION: Transaction
+MESSAGE: Transaction Code: 20151124093520
+Customer ID: 1
+Transferring Account: 888888188
+Amount: 1100
+Beneficiary Name: John
+Beneficiary Surname: Smith
+Beneficiary Account: 62743048
+Message: Present for birthday
+Result: Transaction successfully completed
+Error Message: NULL
+
+[2015-11-24 09:35:59 IP: 127.0.0.1] ACTION: Statement
+MESSAGE: User ID: 2 just request the statement for the account: 62743048 Start Date:  End Date:  Min Amount:  Max Amount: 
+
+[2015-11-24 09:39:41 IP: 127.0.0.1] ACTION: Statement
+MESSAGE: User ID: 1 just request the statement for the account: 100159745 Start Date:  End Date:  Min Amount:  Max Amount: 
+
+[2015-11-24 09:41:02 IP: 127.0.0.1] ACTION: Transaction
+MESSAGE: Transaction Code: 20151124094102
+Customer ID: 1
+Transferring Account: 100159745
+Amount: 101
+Beneficiary Name: John
+Beneficiary Surname: Tosti
+Beneficiary Account: 1234567
+Message: Hi there
+Result: Transaction aborted
+Error Message: unknown beneficiary account
+
+[2015-11-24 09:42:28 IP: 127.0.0.1] ACTION: Transaction
+MESSAGE: Transaction Code: 20151124094228
+Customer ID: 2
+Transferring Account: 62743048
+Amount: 20000
+Beneficiary Name: John
+Beneficiary Surname: Smith
+Beneficiary Account: 62743048
+Message: money to myself
+Result: Transaction aborted
+Error Message: customer account cannot be equal to beneficiary account
+

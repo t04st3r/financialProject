@@ -124,7 +124,7 @@ class db {
             $t_code = $this->writeTransactionLog($cust_account, $amount, $ben_account, $ip, $message, false, $error);
             $this->writeLog('Transaction', 'Transaction Code: '.$t_code.PHP_EOL.'Customer ID: '.$cust_id.PHP_EOL.'Transferring Account: '.$cust_account.PHP_EOL.'Amount: '.$amount.''
                     .PHP_EOL. 'Beneficiary Name: '.$ben_name.PHP_EOL.'Beneficiary Surname: '.$ben_surname.PHP_EOL. 'Beneficiary Account: '
-                    .$ben_account.PHP_EOL.'Error Message: '.$error);
+                    .$ben_account.PHP_EOL.'Message: '.$message.PHP_EOL.'Result: Transaction aborted'.PHP_EOL.'Error Message: '.$error);
             return array('result' => false,
                 'message' => 'Transaction Aborted:<br/>' . $error . '<br/>Transaction Code: ' . $t_code);
         }
@@ -135,7 +135,7 @@ class db {
             $t_code = $this->writeTransactionLog($cust_account, $amount, $ben_account, $ip, $message, false, $error);
             $this->writeLog('Transaction', 'Transaction Code: '.$t_code.PHP_EOL.'Customer ID: '.$cust_id.PHP_EOL.'Transferring Account: '.$cust_account.PHP_EOL.'Amount: '.$amount.''
                     .PHP_EOL. 'Beneficiary Name: '.$ben_name.PHP_EOL.'Beneficiary Surname: '.$ben_surname.PHP_EOL. 'Beneficiary Account: '
-                    .$ben_account.PHP_EOL.'Error Message: '.$error);
+                    .$ben_account.PHP_EOL.'Message: '.$message.PHP_EOL.'Result: Transaction aborted'.PHP_EOL.'Error Message: '.$error);
             return array('result' => false,
                 'message' => 'Transaction Aborted:<br/>' . $error . '<br/>Transaction Code: ' . $t_code);
         }
@@ -146,7 +146,7 @@ class db {
             $t_code = $this->writeTransactionLog($cust_account, $amount, $ben_account, $ip, $message, false, $error);
             $this->writeLog('Transaction', 'Transaction Code: '.$t_code.PHP_EOL.'Customer ID: '.$cust_id.PHP_EOL.'Transferring Account: '.$cust_account.PHP_EOL.'Amount: '.$amount.''
                     .PHP_EOL. 'Beneficiary Name: '.$ben_name.PHP_EOL.'Beneficiary Surname: '.$ben_surname.PHP_EOL. 'Beneficiary Account: '
-                    .$ben_account.PHP_EOL.'Error Message: '.$error);
+                    .$ben_account.PHP_EOL.'Message: '.$message.PHP_EOL.'Result: Transaction aborted'.PHP_EOL.'Error Message: '.$error);
             return array('result' => false,
                 'message' => 'Transaction Aborted:<br/>' . $error . '<br/>Transaction Code: ' . $t_code);
         }
@@ -157,7 +157,7 @@ class db {
             $t_code = $this->writeTransactionLog($cust_account, $amount, $ben_account, $ip, $message, false, $error);
             $this->writeLog('Transaction', 'Transaction Code: '.$t_code.PHP_EOL.'Customer ID: '.$cust_id.PHP_EOL.'Transferring Account: '.$cust_account.PHP_EOL.'Amount: '.$amount.''
                     .PHP_EOL. 'Beneficiary Name: '.$ben_name.PHP_EOL.'Beneficiary Surname: '.$ben_surname.PHP_EOL. 'Beneficiary Account: '
-                    .$ben_account.PHP_EOL.'Error Message: '.$error);
+                    .$ben_account.PHP_EOL.'Message: '.$message.PHP_EOL.'Result: Transaction aborted'.PHP_EOL.'Error Message: '.$error);
             return array('result' => false,
                 'message' => 'Transaction Aborted:<br/>' . $error . '<br/>Transaction Code: ' . $t_code);
         }
@@ -169,7 +169,7 @@ class db {
             $t_code = $this->writeTransactionLog($cust_account, $amount, $ben_account, $ip, $message, false, $error);
             $this->writeLog('Transaction', 'Transaction Code: '.$t_code.PHP_EOL.'Customer ID: '.$cust_id.PHP_EOL.'Transferring Account: '.$cust_account.PHP_EOL.'Amount: '.$amount.''
                     .PHP_EOL. 'Beneficiary Name: '.$ben_name.PHP_EOL.'Beneficiary Surname: '.$ben_surname.PHP_EOL. 'Beneficiary Account: '
-                    .$ben_account.PHP_EOL.'Error Message: '.$error);
+                    .$ben_account.PHP_EOL.'Message: '.$message.PHP_EOL.'Result: Transaction aborted'.PHP_EOL.'Error Message: '.$error);
             return array('result' => false,
                 'message' => 'Transaction Aborted:<br/>' . $error . '<br/>Transaction Code: ' . $t_code);
         }
@@ -182,7 +182,7 @@ class db {
             $t_code = $this->writeTransactionLog($cust_account, $amount, $ben_account, $ip, $message, false, $error);
             $this->writeLog('Transaction', 'Transaction Code: '.$t_code.PHP_EOL.'Customer ID: '.$cust_id.PHP_EOL.'Transferring Account: '.$cust_account.PHP_EOL.'Amount: '.$amount.''
                     .PHP_EOL. 'Beneficiary Name: '.$ben_name.PHP_EOL.'Beneficiary Surname: '.$ben_surname.PHP_EOL. 'Beneficiary Account: '
-                    .$ben_account.PHP_EOL.'Error Message: '.$error);
+                    .$ben_account.PHP_EOL.'Message: '.$message.PHP_EOL.'Result: Transaction aborted'.PHP_EOL.'Error Message: '.$error);
             return array('result' => false,
                 'message' => 'Transaction Aborted:<br/>' . $error . '<br/>Transaction Code: ' . $t_code);
         }
@@ -196,7 +196,7 @@ class db {
             $t_code = $this->writeTransactionLog($cust_account, $amount, $ben_account, $ip, $message, false, $error);
             $this->writeLog('Transaction', 'Transaction Code: '.$t_code.PHP_EOL.'Customer ID: '.$cust_id.PHP_EOL.'Transferring Account: '.$cust_account.PHP_EOL.'Amount: '.$amount.''
                     .PHP_EOL. 'Beneficiary Name: '.$ben_name.PHP_EOL.'Beneficiary Surname: '.$ben_surname.PHP_EOL. 'Beneficiary Account: '
-                    .$ben_account.PHP_EOL.'Error Message: '.$error);
+                    .$ben_account.PHP_EOL.'Message: '.$message.PHP_EOL.'Result: Transaction aborted'.PHP_EOL.'Error Message: '.$error);
             return array('result' => false,
                 'message' => 'Transaction Aborted:<br/>' . $error . '<br/>Transaction Code: ' . $t_code);
         }
@@ -209,7 +209,7 @@ class db {
             $t_code = $this->writeTransactionLog($cust_account, $amount, $ben_account, $ip, $message, false, $error);
             $this->writeLog('Transaction', 'Transaction Code: '.$t_code.PHP_EOL.'Customer ID: '.$cust_id.PHP_EOL.'Transferring Account: '.$cust_account.PHP_EOL.'Amount: '.$amount.''
                     .PHP_EOL. 'Beneficiary Name: '.$ben_name.PHP_EOL.'Beneficiary Surname: '.$ben_surname.PHP_EOL. 'Beneficiary Account: '
-                    .$ben_account.PHP_EOL.'Error Message: '.$error);
+                    .$ben_account.PHP_EOL.'Message: '.$message.PHP_EOL.'Result: Transaction aborted'.PHP_EOL.'Error Message: '.$error);
             return array('result' => false,
                 'message' => 'Transaction Aborted:<br/>' . $error . '<br/>Transaction Code: ' . $t_code);
         }
@@ -303,6 +303,11 @@ class db {
 
             //write on transaction table transaction successfully completed
             $code = $this->writeTransactionLog($cust_account, $amount, $ben_account, $ip, $message, true, NULL);
+            
+             //write on  general.log file transaction successfully completed
+            $this->writeLog('Transaction', 'Transaction Code: '.$code.PHP_EOL.'Customer ID: '.$cust_id.PHP_EOL.'Transferring Account: '.$cust_account.PHP_EOL.'Amount: '.$amount.''
+                    .PHP_EOL. 'Beneficiary Name: '.$ben_name.PHP_EOL.'Beneficiary Surname: '.$ben_surname.PHP_EOL. 'Beneficiary Account: '
+                    .$ben_account.PHP_EOL.'Message: '.$message.PHP_EOL.'Result: Transaction successfully completed'.PHP_EOL.'Error Message: NULL');
 
             //commit transaction
             $this->conn->commit();
@@ -314,7 +319,7 @@ class db {
             $code = $this->writeTransactionLog($cust_account, $amount, $ben_account, $ip, $message, false, $error);
             $this->writeLog('Transaction', 'Transaction Code: '.$code.PHP_EOL.'Customer ID: '.$cust_id.PHP_EOL.'Transferring Account: '.$cust_account.PHP_EOL.'Amount: '.$amount.''
                     .PHP_EOL. 'Beneficiary Name: '.$ben_name.PHP_EOL.'Beneficiary Surname: '.$ben_surname.PHP_EOL. 'Beneficiary Account: '
-                    .$ben_account.PHP_EOL.'Error Message: '.$error);
+                    .$ben_account.PHP_EOL.'Message: '.$message.PHP_EOL.'Result: Transaction aborted'.PHP_EOL.'Error Message: '.$error);
             return array('result' => false, 'message' => $error . '<br/>Transaction Code: ' . $code);
         }
     }

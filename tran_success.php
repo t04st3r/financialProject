@@ -51,7 +51,7 @@ $code = $_SESSION['code'];
                     echo $token . '&cust_account=' . $cust_account .
                     '&amount=' . $amount . '&ben_name=' . $ben_name . '&ben_surname=' . $ben_surname . '&ben_account=' . $ben_account . ''
                     . '&message=' . $message . '&code=' . $code . '&cust_name=' . $customer_name
-                    ?>">Download PDF Receipt</a></h5>
+                    ?>" target="_blank">Download PDF Receipt</a></h5>
             </div>
         </div>        
 
